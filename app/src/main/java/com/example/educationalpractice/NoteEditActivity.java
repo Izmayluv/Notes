@@ -9,9 +9,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 public class NoteEditActivity extends AppCompatActivity {
 
-    ImageButton image;
+    FloatingActionButton floatingActionButton;
     EditText noteName, noteDescription;
     DbManager dbManager;
     Note note;
@@ -22,7 +24,7 @@ public class NoteEditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_edit);
 
-        image = findViewById(R.id.imageButton);
+        floatingActionButton = findViewById(R.id.floatingActionButton2);
         noteName = findViewById(R.id.noteName);
         noteDescription = findViewById(R.id.noteDesc);
 
@@ -30,7 +32,7 @@ public class NoteEditActivity extends AppCompatActivity {
 
         GetIntents();
 
-        image.setOnClickListener(new View.OnClickListener() {
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 OnSave();
@@ -71,8 +73,6 @@ public class NoteEditActivity extends AppCompatActivity {
                 dbManager.CloseDb();
             }
         }
-
-
         finish();
     }
 }

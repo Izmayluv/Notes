@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,11 +18,13 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     private final LayoutInflater inflater;
     public List<Note> notes;
     private final OnNoteClickListener onClickListener;
+    private long noteId;
 
-    NoteAdapter(Context context, List<Note> notes, OnNoteClickListener onClickListener){
+    NoteAdapter(Context context, List<Note> notes, OnNoteClickListener onClickListener, long noteId){
         this.notes = notes;
         this.inflater = LayoutInflater.from(context);
         this.onClickListener = onClickListener;
+        this.noteId = noteId;
     }
 
     @NonNull
@@ -37,6 +40,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
 
         int adapterPos = holder.getAdapterPosition();
         long itemId = holder.getItemId();
+
         holder.textViewNoteName.setText(note.getNoteName());
         holder.textViewNoteDate.setText(note.getNoteDate());
 
@@ -73,6 +77,19 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         notes.clear();
         notes.addAll(newList);
         notifyDataSetChanged();
+    }
+
+    public void deleteItem(int position,Context context) {
+        noteId = notes.get(position).getNoteId();
+
+        Toast.makeText(context,"Удаление заметки с ID: "+noteId,Toast.LENGTH_SHORT).show();
+        DbManager dbManager = new DbManager(context);
+    dbManager.OpenDb();
+        dbManager.deleteNote(noteId);
+    dbManager.CloseDb();
+
+        notes.remove(position);
+        notifyItemRemoved(position);
     }
 
 }

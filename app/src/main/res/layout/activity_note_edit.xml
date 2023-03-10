@@ -4,15 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#404050"
+    android:background="#303030"
     tools:context=".NoteEditActivity">
 
     <EditText
         android:id="@+id/noteName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="12dp"
         android:background="@android:color/transparent"
         android:ems="10"
         android:hint="Name"
@@ -22,7 +23,7 @@
         android:textAlignment="viewStart"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageButton"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
@@ -33,30 +34,32 @@
         android:layout_marginTop="12dp"
         android:layout_marginEnd="12dp"
         android:layout_marginBottom="16dp"
-        android:padding="10dp"
         android:background="@android:color/transparent"
         android:ems="10"
-        android:textSize="16sp"
-        android:inputType="textLongMessage|textMultiLine"
-        android:singleLine="false"
-        android:hint="Text"
         android:gravity="top"
+        android:hint="Text"
+        android:importantForAutofill="no"
+        android:inputType="textLongMessage|textMultiLine"
+        android:padding="10dp"
+        android:singleLine="false"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/noteName"
-        android:importantForAutofill="no" />
+        app:layout_constraintTop_toBottomOf="@+id/noteName" />
 
-    <ImageButton
-        android:id="@+id/imageButton"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="12dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/btn_dialog"
-        android:contentDescription="@string/tododad" />
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_save"
+        android:contentDescription="@string/dsada"
+        android:focusable="true" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

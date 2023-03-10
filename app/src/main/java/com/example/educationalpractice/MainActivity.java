@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     NoteAdapter noteAdapter;
     FloatingActionButton floatingActionButton;
     DbManager dbManager;
+    long noteId;
 
 
     @Override
@@ -33,7 +35,8 @@ public class MainActivity extends AppCompatActivity {
         floatingActionButton = findViewById(R.id.floatingActionButton);
 
         dbManager = new DbManager(getApplicationContext());
-        dbManager.OpenDb();
+    dbManager.OpenDb();
+
         NoteAdapter.OnNoteClickListener onNoteClickListener = new NoteAdapter.OnNoteClickListener() {
             @Override
             public void onNoteClick(Note note, long itemId, int adapterPos) {
@@ -43,10 +46,11 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         };
-
-        noteAdapter = new NoteAdapter(getApplicationContext(),dbManager.getAllNotes(), onNoteClickListener);
+        noteAdapter = new NoteAdapter(getApplicationContext(),dbManager.getAllNotes(), onNoteClickListener, noteId);
         recyclerView.setAdapter(noteAdapter);
-        dbManager.CloseDb();
+
+    dbManager.CloseDb();
+
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,14 +58,18 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        SwipeToDeleteCallback swipeToDeleteCallback = new SwipeToDeleteCallback(noteAdapter, getApplicationContext());
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeToDeleteCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        dbManager.OpenDb();
+    dbManager.OpenDb();
         noteAdapter.UpdateAdapter(dbManager.getAllNotes());
-        dbManager.CloseDb();
+    dbManager.CloseDb();
     }
 
     public static String CurrentDate(){
@@ -72,6 +80,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        dbManager.CloseDb();
+    dbManager.CloseDb();
     }
 }

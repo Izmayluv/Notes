@@ -39,7 +39,7 @@ public class DbManager {
         ContentValues contentValues = new ContentValues();
         contentValues.put(NoteDB.NOTE_ID, noteId);
         contentValues.put(NoteDB.NOTE_NAME, noteName);
-        contentValues.put(NoteDB.NOTE_DATE, noteDescription);
+        contentValues.put(NoteDB.NOTE_DESCRIPTION, noteDescription);
         database.update(NoteDB.NOTE_TABLE_NAME, contentValues,NoteDB.NOTE_ID + "= ?", new String[] {noteIdStr});
     }
 
@@ -62,6 +62,11 @@ public class DbManager {
         cursor.close();
         return note;
     }*/
+
+    public void deleteNote(long noteId){
+        String noteIdStr =  Long.toString(noteId);
+        database.delete(NoteDB.NOTE_TABLE_NAME,NoteDB.NOTE_ID + " = ?", new String[] {noteIdStr});
+    }
 
     public List<Note> getAllNotes(){
         List<Note> tempList = new ArrayList<>();
